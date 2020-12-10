@@ -2,8 +2,8 @@ import csv
 import re
 import pandas as pd
 import requests
-pattern = '<li class=\"list-item list-item-(\d\d\d\d\d\d\d) list-day-12-13 notStart\"'
-with open('game.html','r') as gamefile:
+pattern = '<li class=\"list-item list-item-(\d\d\d\d\d\d\d) list-day-12-14 notStart\"'
+with open('game3.html','r') as gamefile:
     res = gamefile.read()
 game_id = re.findall(pattern,res)
 def is_super_league(page):
@@ -40,13 +40,13 @@ def is_super_league(page):
 for id in game_id:
     try:
         output = requests.get(f'https://live.leisu.com/oupei-{id}')
-        # if is_super_league(output.content.decode()) and '竞彩官方' in output.content.decode():
-        #     # with open('idlist.txt','a') as idlistfile:
-        #         # idlistfile.write(f'{id}')
-        #     print(id)
-        if '竞彩官方' in output.content.decode():
-            with open('idlist.txt','a') as idlistfile:
+        if is_super_league(output.content.decode()) and '竞彩官方' in output.content.decode():
+            # with open('idlist.txt','a') as idlistfile:
                 # idlistfile.write(f'{id}')
-                print(id)
+            print(id)
+        # if '竞彩官方' in output.content.decode():
+        #     with open('idlist.txt','a') as idlistfile:
+        #         # idlistfile.write(f'{id}')
+        #         print(id)
     except ConnectionError:
         print('not connectable')

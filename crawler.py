@@ -18,7 +18,7 @@ pattern = '\[(3\d\d\d\d\d\d)'
 game_type_pattern = '<\/div><\/div><div class=\"team-center\"><div class=\"clearfix-row\"> (.*) 2020\/12\/10 01:55<\/div><div'
 ids = re.findall(pattern,res.content.decode())
 name_pattern = '<span class="line-h-22 float-left m-l-5 w-105 word-break text-a-l">( .{2,15} )<\/span><\/'
-odds_pattern = ' <\/span><\/td><td class="win-step bd-left"><div class="win-step-find clearfix-row position-r">        <div class="begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8"><span class="float-left col-3"> (\d.\d\d\d)'
+odds_pattern = '<div class=\"begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8\"><span class=\"float-left col-3\"> (.{2,15}) </span>'
 # ids_list = ['3462698','3462651','3462650','3462639','3462638','3462627','3462626','3462615','3462614']
 team_1_pattern = '<div class=\"name\"><span class=\"display-i-b line-h-25\"> (.*)</span></div><div class=\"team-icon\"'
 team_2_pattern = '\"></div><div class=\"name\"><span class=\"display-i-b line-h-25\">(.*) </span></div></div></div></div><div class=\"nav-panel\"><div class=\"content children\"><ul class=\"nav-list\"><li><a class=\"link '
@@ -36,11 +36,11 @@ for id in ids_list:
   page_content = odds_page.content.decode()
   odds_346 = re.findall(odds_pattern,page_content)
   game_type = listToString(re.findall(game_type_pattern,page_content))
-  game_type = trans.translate(game_type)
+  # game_type = trans.translate(game_type)
   team_1_name = listToString(re.findall(team_1_pattern,page_content))
   team_2_name = listToString(re.findall(team_2_pattern,page_content))
-  team_1_name = trans.translate(team_1_name)
-  team_2_name = trans.translate(team_2_name)
+  # team_1_name = trans.translate(team_1_name)
+  # team_2_name = trans.translate(team_2_name)
   print(game_type, team_1_name, team_2_name)
   name = re.findall(name_pattern,page_content)
   name = ['Bet365'] + name
@@ -91,4 +91,4 @@ for id in ids_list:
           print(item[0].strip(),item[1])
           pin = item[1]
   with open('oddsList.csv','a') as file:
-      file.write(f'{team_1_name,team_2_name },{hg},{li},{b5},{sna},{wl},{ms},{ao},{inte}, ,{game_type},{pin},{b10},{ysb},{w},\n')
+      file.write(f'{team_1_name + " " + team_2_name },{hg},{li},{b5},{sna},{wl},{ms},{ao},{inte}, ,{game_type},{pin},{b10},{ysb},{w},\n')
